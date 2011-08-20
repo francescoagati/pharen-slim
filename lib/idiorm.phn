@@ -1,0 +1,12 @@
+(defmacro orm-config (type host db username password) 
+    '(do
+      (:: ORM (configure (. ~type ":host=" ~host ";dbname=" ~db )))
+      (:: ORM (configure "username" ~username))
+      (:: ORM (configure "password" ~password))
+      )
+  )
+  
+(micro table-for (tbl) (:: ORM (for_table ~tbl)))
+
+(defmacro orm-select (tbl fields where order)
+  '(-> (table-for ~tbl) (select ~fields) (where ~where) (order ~order) (find-many)))

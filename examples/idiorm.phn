@@ -1,0 +1,3 @@
+(orm-config #mysql #127.0.0.1 #db_my #root #root)
+(table-for #users)
+(orm-select #users "name,surname" (. "id=" 2) "id desc")

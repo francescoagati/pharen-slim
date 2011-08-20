@@ -1,0 +1,17 @@
+(require-once #slim.php)
+(slim-init)
+
+(def n 123)
+
+(slim-get "/books/:one/:two" #get-book (one two) 
+  
+  (echo n)
+  (echo (-> (slim-rq) (params #ciccio )))
+  (slim-rq-is #get 
+    (echo "get"))
+
+  (slim-rq-is #Ajax 
+  (slim-response-with-json [(dict #a 1) (dict #a 2)]))
+    
+  (echo (. "first parameter" one))
+  (echo (. "second parameter" two)))

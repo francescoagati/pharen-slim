@@ -1,0 +1,34 @@
+(defmacro slim-init () '(def app (new Slim)))
+(defmacro slim-set-local-instance () '(local app (:: Slim (getInstance))))
+
+(defmacro slim-http-request (method route name args &body)
+ '(do
+   (-> app (~method ~route ~name) (name ~name))
+    (fn ~-name ~args  
+      (do
+      (local app (:: Slim (getInstance)))
+      (local params (slim-params))
+      ~@body
+      FALSE 
+      )
+ )))
+
+
+(defmacro slim-rq-is (cond &body)
+  (def method-name (. "is" cond))
+  '(if (-> (slim-rq) (~method-name)) ~@body FALSE)
+)
+
+(defmacro slim-response-with-json (data)
+  '(-> app (response) (body (json-encode ~data))))
+
+(defmacro slim-get (route name args &body) '(slim-http-request get ~route ~name ~args ~@body))
+(defmacro slim-post (route name args &body) '(slim-http-request post ~route ~name ~args ~@body))
+(defmacro slim-put (route name args &body) '(slim-http-request put ~route ~name ~args ~@body))
+(defmacro slim-delete (route name args &body) '(slim-http-request delete ~route ~name ~args ~@body))
+
+(fn slim-rq () 
+  (slim-set-local-instance)
+  (-> app request))
+
+(fn slim-params () (-> (slim-rq) (params)))
