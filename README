@@ -1,0 +1,4 @@
+for compile
+
+php <path to pharen> lib/idiorm.phn examples/idiorm.phn 
+php <path to pharen> lib/slim.phn examples/slim1.phn 
