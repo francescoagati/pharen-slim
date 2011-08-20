@@ -5,5 +5,5 @@ Lexical::$scopes['idiorm'] = array();
 	ORM::configure("username", "root");
 	ORM::configure("password", "root");
 
-ORM::for_table("users");
+ORM::for_table("users")->where("id", 5)->find_one();
 ORM::for_table("users")->select("name,surname")->where(("id=" . 2))->order("id desc")->find_many();

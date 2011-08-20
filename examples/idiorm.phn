@@ -1,3 +1,8 @@
 (orm-config #mysql #127.0.0.1 #db_my #root #root)
-(table-for #users)
+
+(-> (table-for #users)
+  (where #id 5)
+  (find_one)
+)
+
 (orm-select #users "name,surname" (. "id=" 2) "id desc")
